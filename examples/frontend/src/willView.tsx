@@ -4,7 +4,6 @@ import { useNetworkVariable } from './networkConfig';
 import { AlertDialog, Button, Card, Dialog, Flex, Grid } from '@radix-ui/themes';
 import { fromHex } from '@mysten/sui/utils';
 import { Transaction } from '@mysten/sui/transactions';
-import { SuiClient } from '@mysten/sui/client';
 import { getAllowlistedKeyServers, SealClient, SessionKey, NoAccessError } from '@mysten/seal';
 import { useParams } from 'react-router-dom';
 import { downloadAndDecrypt } from './utils';
@@ -19,7 +18,7 @@ export interface FeedData {
 function constructMoveCall(packageId: string, allowlistId: string) {
   return (tx: Transaction, id: string) => {
     tx.moveCall({
-      target: `${packageId}::allowlist::seal_approve`,
+      target: `${packageId}::will::seal_approve`,
       arguments: [tx.pure.vector('u8', fromHex(id)), tx.object(allowlistId)],
     });
   };

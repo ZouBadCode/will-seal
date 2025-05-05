@@ -15,6 +15,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AllAllowlist } from './OwnedAllowlists';
 import { AllServices } from './OwnedSubscriptionServices';
 import Feeds from './willView'
+import { CreateWillList } from './CreateWillCap';
+import { Willlist } from './Willlist';
 
 function LandingPage() {
   return (
@@ -60,6 +62,7 @@ function LandingPage() {
 function App() {
   const currentAccount = useCurrentAccount();
   const [recipientAllowlist, setRecipientAllowlist] = useState<string>('');
+  
   const [capId, setCapId] = useState<string>('');
   return (
     <Container>
@@ -93,6 +96,35 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route
+              path="/will-example/*"
+              element={
+                <Routes>
+                  <Route path="/" element={<CreateWillList />} />
+                  <Route
+                    path="/admin/will/:id"
+                    element={
+                      <div>
+                        <Willlist
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
+                        <WalrusUpload
+                          policyObject={recipientAllowlist}
+                          cap_id={capId}
+                          moduleName="will"
+                        />
+                      </div>
+                    }
+                  />
+                  <Route path="/admin/will/" element={<AllAllowlist />} />
+                  <Route
+                    path="/admin/will/:id"
+                    element={<Feeds suiAddress={currentAccount.address} />}
+                  />
+                </Routes>
+              }
+            />
+            <Route
               path="/allowlist-example/*"
               element={
                 <Routes>
@@ -113,9 +145,9 @@ function App() {
                       </div>
                     }
                   />
-                  <Route path="/admin/allowlists" element={<AllAllowlist />} />
+                  <Route path="/admin/will" element={<AllAllowlist />} />
                   <Route
-                    path="/view/allowlist/:id"
+                    path="/admin/will/:id"
                     element={<Feeds suiAddress={currentAccount.address} />}
                   />
                 </Routes>
