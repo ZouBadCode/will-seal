@@ -17,7 +17,7 @@ import { AllServices } from './OwnedSubscriptionServices';
 import Feeds from './willView'
 import { CreateWillList } from './CreateWillCap';
 import { Willlist } from './Willlist';
-
+import { AllWilllist } from './OwnedWilllists';
 function LandingPage() {
   return (
     <Grid columns="2" gap="4">
@@ -116,7 +116,7 @@ function App() {
                       </div>
                     }
                   />
-                  <Route path="/admin/will/" element={<AllAllowlist />} />
+                  <Route path="/admin/will/" element={<AllWilllist />} />
                   <Route
                     path="/admin/will/:id"
                     element={<Feeds suiAddress={currentAccount.address} />}
